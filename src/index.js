@@ -44,6 +44,25 @@ class Board extends React.Component {
   }
 }
 
+class Move extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: false,
+    };
+  }
+
+  handleClick() {
+    console.log("Hello World!");
+  }
+
+  render() {
+    return (
+      <button id={this.props.id} onClick={this.props.onClick}>{this.props.value}</button>
+    );
+  }
+}
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -82,6 +101,13 @@ class Game extends React.Component {
       stepNumber: step,
       xIsNext: (step % 2) === 0,
     });
+
+    let selected = document.getElementsByClassName("selected");
+    for (var i = 0; i < selected.length; ++i) {
+      selected[i].classList.remove("selected");
+    }
+
+    document.getElementById("move-number-" + step).classList.add("selected");
   }
 
   render() {
@@ -95,7 +121,7 @@ class Game extends React.Component {
         'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <Move id={'move-number-' + move} onClick={() => this.jumpTo(move)} value={desc} />
         </li>
       );
     });
